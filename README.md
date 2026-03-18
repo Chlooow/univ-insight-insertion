@@ -1,2 +1,2 @@
 # univ-insight-insertion
-Dans le cadre du module représentation des connaissances #Data #SQL #University
+Dans le cadre du module représentation des connaissances
