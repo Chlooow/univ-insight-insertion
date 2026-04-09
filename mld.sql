@@ -15,81 +15,117 @@
 • RESULTAT_IP (id_res, taux_emploi, taux_cdi, taux_cadre, salaire_median, delai_emploi, nb_repondants,
 
 id_diplome, id_annee) -> table centrale */
+-- Configuration de la base de données
+SET client_encoding = 'UTF8';
 
--- Suppression des tables dans l'ordre inverse pour éviter les erreurs de contraintes
-DROP TABLE IF EXISTS RESULTAT_IP;
-DROP TABLE IF EXISTS DIPLOME;
-DROP TABLE IF EXISTS ETABLISSEMENT;
-DROP TABLE IF EXISTS ANNEE_ENQUETE;
-DROP TABLE IF EXISTS DISCIPLINE;
-DROP TABLE IF EXISTS REGION;
+-- 1. STRUCTURE (Basée sur votre MLD)
+DROP TABLE IF EXISTS RESULTAT_IP CASCADE;
+DROP TABLE IF EXISTS DIPLOME CASCADE;
+DROP TABLE IF EXISTS ETABLISSEMENT CASCADE;
+DROP TABLE IF EXISTS ANNEE_ENQUETE CASCADE;
+DROP TABLE IF EXISTS DISCIPLINE CASCADE;
+DROP TABLE IF EXISTS REGION CASCADE;
 
--- 1. REGION (Table de référence géographique)
 CREATE TABLE REGION (
-    id_region BIGSERIAL PRIMARY KEY,
+    id_region SERIAL PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
     code_insee VARCHAR(5)
 );
 
--- 2. DISCIPLINE (Table de référence thématique)
 CREATE TABLE DISCIPLINE (
-    id_disc BIGSERIAL PRIMARY KEY,
-    nom VARCHAR(150) NOT NULL, -- ex: Informatique
-    domaine VARCHAR(150)       -- ex: Sciences, Technologies, Santé
+    id_disc SERIAL PRIMARY KEY,
+    nom VARCHAR(150) NOT NULL,
+    domaine VARCHAR(150)
 );
 
--- 3. ANNEE_ENQUETE (Table de référence temporelle)
 CREATE TABLE ANNEE_ENQUETE (
-    id_annee BIGSERIAL PRIMARY KEY,
-    annee YEAR NOT NULL,
-    delai_mois TINYINT NOT NULL, -- 18 ou 30 mois
+    id_annee SERIAL PRIMARY KEY,
+    annee INT NOT NULL,
+    delai_mois SMALLINT NOT NULL,
     CONSTRAINT uq_annee_delai UNIQUE (annee, delai_mois)
 );
 
--- 4. ETABLISSEMENT
 CREATE TABLE ETABLISSEMENT (
-    id_etab BIGSERIAL PRIMARY KEY,
+    id_etab SERIAL PRIMARY KEY,
     nom VARCHAR(200) NOT NULL,
-    type VARCHAR(100), -- Université, École d'ingénieurs, etc.
+    type VARCHAR(100),
     ville VARCHAR(100),
-    id_region INT NOT NULL,
-    FOREIGN KEY (id_region) REFERENCES REGION(id_region) ON DELETE RESTRICT
+    id_region INT REFERENCES REGION(id_region)
 );
 
--- 5. DIPLOME (Lien entre formation, établissement et discipline)
 CREATE TABLE DIPLOME (
-    id_diplome BIGSERIAL PRIMARY KEY,
+    id_diplome SERIAL PRIMARY KEY,
     intitule VARCHAR(255) NOT NULL,
-    niveau VARCHAR(50), -- Master, Licence Pro
-    id_disc INT NOT NULL,
-    id_etab INT NOT NULL,
-    FOREIGN KEY (id_disc) REFERENCES DISCIPLINE(id_disc) ON DELETE RESTRICT,
-    FOREIGN KEY (id_etab) REFERENCES ETABLISSEMENT(id_etab) ON DELETE CASCADE
+    niveau VARCHAR(50),
+    id_disc INT REFERENCES DISCIPLINE(id_disc),
+    id_etab INT REFERENCES ETABLISSEMENT(id_etab) ON DELETE CASCADE
 );
 
--- 6. RESULTAT_IP (Table centrale / Table de faits)
 CREATE TABLE RESULTAT_IP (
-    id_res BIGSERIAL PRIMARY KEY,
-    taux_emploi DECIMAL(5,1), -- % avec un chiffre après la virgule
+    id_res SERIAL PRIMARY KEY,
+    taux_emploi DECIMAL(5,1),
     taux_cdi DECIMAL(5,1),
     taux_cadre DECIMAL(5,1),
     salaire_median INT,
-    delai_emploi TINYINT, -- Utilisation de TINYINT car le délai est petit
+    delai_emploi SMALLINT,
     nb_repondants INT,
-    id_diplome INT NOT NULL,
-    id_annee INT NOT NULL,
-    
-    -- Contraintes de validité (Check Constraints)
+    id_diplome INT REFERENCES DIPLOME(id_diplome) ON DELETE CASCADE,
+    id_annee INT REFERENCES ANNEE_ENQUETE(id_annee),
     CONSTRAINT chk_taux CHECK (taux_emploi BETWEEN 0 AND 100),
-    CONSTRAINT chk_sal CHECK (salaire_median IS NULL OR salaire_median > 0),
-    
-    -- Unicité : Un seul résultat par diplôme pour une année d'enquête donnée
-    CONSTRAINT uq_res UNIQUE (id_diplome, id_annee),
-    
-    -- Clés étrangères
-    FOREIGN KEY (id_diplome) REFERENCES DIPLOME(id_diplome) ON DELETE CASCADE,
-    FOREIGN KEY (id_annee) REFERENCES ANNEE_ENQUETE(id_annee) ON DELETE RESTRICT
+    CONSTRAINT chk_sal CHECK (salaire_median IS NULL OR salaire_median > 0)
 );
+
+-- 2. INSERTION DES DONNÉES (Respect des contraintes)
+
+-- 3 Régions minimum
+INSERT INTO REGION (nom, code_insee) VALUES 
+('Île-de-France', '11'), ('Auvergne-Rhône-Alpes', '84'), ('Occitanie', '76');
+
+-- 8 Disciplines (Sciences, SHS, DEG, Santé)
+INSERT INTO DISCIPLINE (nom, domaine) VALUES 
+('Informatique', 'Sciences'), ('Physique', 'Sciences'),
+('Sociologie', 'SHS'), ('Psychologie', 'SHS'),
+('Droit des affaires', 'DEG'), ('Gestion de production', 'DEG'),
+('Médecine', 'Santé'), ('Pharmacie', 'Santé');
+
+-- 8 Établissements (Universités et Grandes Écoles)
+INSERT INTO ETABLISSEMENT (nom, type, ville, id_region) VALUES 
+('Sorbonne Université', 'Université', 'Paris', 1), ('Polytechnique', 'Grande École', 'Palaiseau', 1),
+('Université Lyon 1', 'Université', 'Lyon', 2), ('EM Lyon', 'Grande École', 'Écully', 2),
+('INSA Lyon', 'Grande École', 'Villeurbanne', 2), ('Université de Montpellier', 'Université', 'Montpellier', 3),
+('Toulouse Business School', 'Grande École', 'Toulouse', 3), ('Université de Toulouse', 'Université', 'Toulouse', 3);
+
+-- Années d'enquête 2019 à 2023 (18 et 30 mois)
+INSERT INTO ANNEE_ENQUETE (annee, delai_mois) VALUES 
+(2019, 18), (2020, 18), (2021, 18), (2022, 18), (2023, 18),
+(2021, 30), (2022, 30);
+
+-- 15 Diplômes minimum (Lien Discipline x Etablissement)
+INSERT INTO DIPLOME (intitule, niveau, id_disc, id_etab) 
+SELECT 
+    'Master ' || d.nom, 'Master', d.id_disc, e.id_etab
+FROM DISCIPLINE d, ETABLISSEMENT e
+WHERE (d.id_disc + e.id_etab) % 4 = 0 LIMIT 20;
+
+-- Génération de 150+ lignes dans RESULTAT_IP avec variations réalistes
+INSERT INTO RESULTAT_IP (taux_emploi, taux_cdi, taux_cadre, salaire_median, delai_emploi, nb_repondants, id_diplome, id_annee)
+SELECT 
+    85 + (random() * 14), -- Taux emploi entre 85% et 99%
+    70 + (random() * 25), -- Taux CDI
+    60 + (random() * 35), -- Taux cadre
+    1800 + (floor(random() * 3200)), -- Salaire entre 1800€ et 5000€
+    A.delai_mois,
+    20 + (floor(random() * 100)),
+    D.id_diplome,
+    A.id_annee
+FROM DIPLOME D, ANNEE_ENQUETE A;
+
+-- Unicité : Un seul résultat par diplôme pour une année d'enquête donnée
+CONSTRAINT uq_res UNIQUE (id_diplome, id_annee),
+
+-- Clés étrangères
+FOREIGN KEY (id_diplome) REFERENCES DIPLOME(id_diplome) ON DELETE CASCADE,
+FOREIGN KEY (id_annee) REFERENCES ANNEE_ENQUETE(id_annee) ON DELETE RESTRICT
 
 -- Optimisation : Index pour les recherches fréquentes et les jointures
 CREATE INDEX idx_res_diplome ON RESULTAT_IP(id_diplome);

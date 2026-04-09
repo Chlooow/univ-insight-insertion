@@ -1,12 +1,19 @@
 services:
   db:
-    build: .
-    image: my_postgres_db
+    image: postgres:15-alpine
+    container_name: mld_postgres_db
+    restart: always
     environment:
-      POSTGRES_DB: mydatabase
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user_admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: insertion_professionnelle
     ports:
       - "5432:5432"
     volumes:
-      - ./data:/var/lib/postgresql
+      # Montage automatique du script SQL au démarrage
+      - ./mld.sql:/docker-entrypoint-initdb.d/mld.sql
+      # Persistance des données
+      - postgres_data:/var/lib/postgresql
+
+volumes:
+  postgres_data:
