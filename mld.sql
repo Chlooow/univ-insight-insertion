@@ -26,21 +26,21 @@ DROP TABLE IF EXISTS REGION;
 
 -- 1. REGION (Table de référence géographique)
 CREATE TABLE REGION (
-    id_region INT AUTO_INCREMENT PRIMARY KEY,
+    id_region BIGSERIAL PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
     code_insee VARCHAR(5)
 );
 
 -- 2. DISCIPLINE (Table de référence thématique)
 CREATE TABLE DISCIPLINE (
-    id_disc INT AUTO_INCREMENT PRIMARY KEY,
+    id_disc BIGSERIAL PRIMARY KEY,
     nom VARCHAR(150) NOT NULL, -- ex: Informatique
     domaine VARCHAR(150)       -- ex: Sciences, Technologies, Santé
 );
 
 -- 3. ANNEE_ENQUETE (Table de référence temporelle)
 CREATE TABLE ANNEE_ENQUETE (
-    id_annee INT AUTO_INCREMENT PRIMARY KEY,
+    id_annee BIGSERIAL PRIMARY KEY,
     annee YEAR NOT NULL,
     delai_mois TINYINT NOT NULL, -- 18 ou 30 mois
     CONSTRAINT uq_annee_delai UNIQUE (annee, delai_mois)
@@ -48,7 +48,7 @@ CREATE TABLE ANNEE_ENQUETE (
 
 -- 4. ETABLISSEMENT
 CREATE TABLE ETABLISSEMENT (
-    id_etab INT AUTO_INCREMENT PRIMARY KEY,
+    id_etab BIGSERIAL PRIMARY KEY,
     nom VARCHAR(200) NOT NULL,
     type VARCHAR(100), -- Université, École d'ingénieurs, etc.
     ville VARCHAR(100),
@@ -58,7 +58,7 @@ CREATE TABLE ETABLISSEMENT (
 
 -- 5. DIPLOME (Lien entre formation, établissement et discipline)
 CREATE TABLE DIPLOME (
-    id_diplome INT AUTO_INCREMENT PRIMARY KEY,
+    id_diplome BIGSERIAL PRIMARY KEY,
     intitule VARCHAR(255) NOT NULL,
     niveau VARCHAR(50), -- Master, Licence Pro
     id_disc INT NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE DIPLOME (
 
 -- 6. RESULTAT_IP (Table centrale / Table de faits)
 CREATE TABLE RESULTAT_IP (
-    id_res INT AUTO_INCREMENT PRIMARY KEY,
+    id_res BIGSERIAL PRIMARY KEY,
     taux_emploi DECIMAL(5,1), -- % avec un chiffre après la virgule
     taux_cdi DECIMAL(5,1),
     taux_cadre DECIMAL(5,1),
