@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: univ_insight
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      # On injecte les fichiers SQL pour l'initialisation automatique
+      - ./mld.sql:/docker-entrypoint-initdb.d/01_mld.sql
+      - ./data/univ_insight.sql:/docker-entrypoint-initdb.d/02_data.sql
+      - ./data/correctif_manquants.sql:/docker-entrypoint-initdb.d/03_correctif.sql
+      # Volume pour persister les données si besoin
+      - db_data:/var/lib/mysql
+
+  app:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: db
+      DB_NAME: univ_insight
+      DB_USER: root
+      DB_PASS: root
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/html/
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - db
+
+volumes:
+  db_data:
