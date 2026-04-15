@@ -2,7 +2,7 @@
 
 ## Présentation du projet
 
-**Univ Insight** est un observatoire national de l'insertion professionnelle des diplômés, réalisé dans le cadre du module **Base de Données** en **M1 Informatique**.
+**Univ Insight** est un observatoire national de l'insertion professionnelle des diplômés, réalisé dans le cadre du module **Modélisation des connaissances** en **M1 Informatique et Big Data**.
 
 Le projet s'appuie sur les données ouvertes du **MESRI** (Ministère de l'Enseignement Supérieur) issues des enquêtes d'insertion professionnelle menées 18 et 30 mois après l'obtention du diplôme (Master, Licence Professionnelle).  
 Source des données : [data.enseignementsup-recherche.gouv.fr](https://data.enseignementsup-recherche.gouv.fr)
