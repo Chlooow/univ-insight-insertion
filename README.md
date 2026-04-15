@@ -2,14 +2,14 @@
 
 ## Présentation du projet
 
-**Univ Insight** est un observatoire national de l'insertion professionnelle des diplômés, réalisé dans le cadre du module **Modélisation des connaissances** en **M1 Informatique et Big Data**.
+**Univ Insight** est un observatoire national de l'insertion professionnelle des diplômés, réalisé dans le cadre du module **Modélisation des connaissances** en **M1 Informatique et Big Data**[...]  
 
-Le projet s'appuie sur les données ouvertes du **MESRI** (Ministère de l'Enseignement Supérieur) issues des enquêtes d'insertion professionnelle menées 18 et 30 mois après l'obtention du diplôme (Master, Licence Professionnelle).  
+Le projet s'appuie sur les données ouvertes du **MESRI** (Ministère de l'Enseignement Supérieur) issues des enquêtes d'insertion professionnelle menées 18 et 30 mois après l'obtention du dipl[...]  
 Source des données : [data.enseignementsup-recherche.gouv.fr](https://data.enseignementsup-recherche.gouv.fr)
 
-L'outil permet :
-- Aux **étudiants** de comparer les débouchés selon les formations
-- Aux **établissements** de se comparer à la moyenne nationale
+L'outil permet :  
+- Aux **étudiants** de comparer les débouchés selon les formations  
+- Aux **établissements** de se comparer à la moyenne nationale  
 - Aux **décideurs** d'identifier les disciplines en difficulté
 
 ## Stack technique
@@ -59,11 +59,13 @@ Le schéma relationnel est composé de 6 tables :
 
 ## Organisation des branches
 
-| Branche | Description |
+Chaque branche correspond à une étape / un périmètre du projet :
+
+| Branche | À quoi elle sert |
 | :--- | :--- |
-| `main` | Branche principale — documentation et fichiers de base |
-| `database` | Mise en place de la base de données : schéma MLD, requêtes SQL, Dockerfile |
-| `ronic-front` | Interface web PHP complète, Docker Compose (MySQL + PHP/Apache + phpMyAdmin) |
+| `main` | Branche de référence. Contient la **documentation** (README) et les **fichiers de base** du projet. Elle sert surtout de point d’entrée pour comprendre le dépôt. |
+| `database` | Branche dédiée à la **mise en place de la base de données** : scripts SQL (création du schéma / MLD, requêtes), et éléments Docker liés à la BDD. Utile pour travailler uniquement sur la partie modèle + données. |
+| `ronic-front` | Branche dédiée à l’**application web complète** (front PHP). Contient l’interface (`client/`) et la configuration **Docker Compose** pour lancer l’ensemble des services (PHP/Apache + MySQL + phpMyAdmin) en local. C’est la branche à utiliser pour exécuter et démontrer le projet. |
 
 ## Lancer le projet
 
