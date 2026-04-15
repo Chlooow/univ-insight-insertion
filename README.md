@@ -1,4 +1,4 @@
-# 📊 Univ Insight — Insertion Professionnelle des Diplômés
+# Univ Insight — Insertion Professionnelle des Diplômés
 
 ## Présentation du projet
 
@@ -12,7 +12,7 @@ L'outil permet :
 - Aux **établissements** de se comparer à la moyenne nationale
 - Aux **décideurs** d'identifier les disciplines en difficulté
 
-## 🛠️ Stack technique
+## Stack technique
 
 | Technologie | Usage |
 | :--- | :--- |
@@ -22,7 +22,7 @@ L'outil permet :
 | **Docker** | Conteneurisation de l'application |
 | **phpMyAdmin** | Administration de la base de données |
 
-## 📁 Structure du projet
+## Structure du projet
 
 ```
 ├── client/                  # Pages PHP de l'interface web
@@ -46,7 +46,7 @@ L'outil permet :
 └── projet-09.pdf            # Sujet du projet
 ```
 
-## 🗄️ Base de données
+## Base de données
 
 Le schéma relationnel est composé de 6 tables :
 
@@ -57,7 +57,7 @@ Le schéma relationnel est composé de 6 tables :
 - **ANNEE_ENQUETE** — Années d'enquête avec délai (18 ou 30 mois)
 - **RESULTAT_IP** — Table centrale contenant les indicateurs d'insertion (taux d'emploi, taux CDI, taux cadre, salaire médian, etc.)
 
-## 🌿 Organisation des branches
+## Organisation des branches
 
 | Branche | Description |
 | :--- | :--- |
@@ -65,7 +65,7 @@ Le schéma relationnel est composé de 6 tables :
 | `database` | Mise en place de la base de données : schéma MLD, requêtes SQL, Dockerfile |
 | `ronic-front` | Interface web PHP complète, Docker Compose (MySQL + PHP/Apache + phpMyAdmin) |
 
-## 🚀 Lancer le projet
+## Lancer le projet
 
 ### Prérequis
 
@@ -110,12 +110,14 @@ docker-compose down
 
 > En cas de conflit de ports (8080 ou 8081 déjà utilisés), modifiez les ports dans `docker-compose.yml` (les numéros à gauche du `:`).
 
-## 👥 Contributeurs
+##  Contributeurs
 
 - **Chloé Makoundou** — [@Chlooow](https://github.com/Chlooow)
 - **Ronic Takougang**
 - **Talubna**
+- **Adrien**
 
 ## 🔗 Liens utiles
 
-- 📽️ Présentation : [https://canva.link/p1xd0am5q4nkhob](https://canva.link/p1xd0am5q4nkhob) 
+- Présentation : [https://canva.link/p1xd0am5q4nkhob](https://canva.link/p1xd0am5q4nkhob)
+- Lien du Rapport : 
