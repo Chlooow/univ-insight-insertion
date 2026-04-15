@@ -62,7 +62,7 @@ Le schéma relationnel est composé de 6 tables :
 | Branche | Description |
 | :--- | :--- |
 | `main` | Branche principale — documentation et fichiers de base |
-| `database` | Mise en place de la base de données : Dockerfile PostgreSQL/MySQL, schéma MLD, requêtes SQL |
+| `database` | Mise en place de la base de données : schéma MLD, requêtes SQL, Dockerfile |
 | `ronic-front` | Interface web PHP complète, Docker Compose (MySQL + PHP/Apache + phpMyAdmin) |
 
 ## 🚀 Lancer le projet
@@ -112,7 +112,7 @@ docker-compose down
 
 ## 👥 Contributeurs
 
-- **Chloé Makoundou** ([@Chlooow](https://github.com/Chlooow))
+- **Chloé Makoundou** — [@Chlooow](https://github.com/Chlooow)
 - **Ronic Takougang**
 - **Talubna**
 
