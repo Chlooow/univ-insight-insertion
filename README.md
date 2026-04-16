@@ -17,7 +17,7 @@
 
 ## `mld.sql` — Script DDL (Data Definition Language)
 
-Ce script crée l'intégralité du schéma relationnel de la base de données `univ_insight` à partir du MLD (Modèle Logique de Données).
+Ce script crée l'intégralité du schéma relationnel de la base de données `univ_insight` à partir du MLD fait par Chloé (Modèle Logique de Données).
 
 Il définit les **6 tables** suivantes (dans l'ordre de création pour respecter les contraintes de clés étrangères) :
 
@@ -39,7 +39,7 @@ Le script inclut également :
 
 ## `Requête.sql` — Scripts d'analyse (8 requêtes)
 
-Ce fichier contient 8 requêtes SQL d'analyse métier sur les données d'insertion professionnelle :
+Ce fichier contient 8 requêtes SQL d'analyse métier sur les données d'insertion professionnelle fais par Talubna:
 
 | N° | Objectif |
 | :--- | :--- |
