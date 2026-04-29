@@ -1,8 +1,10 @@
-# Univ Insight — Insertion Professionnelle des Diplômés
+# Insera — Insertion Professionnelle des Diplômés
+
+<img width="2000" height="2000" alt="Insera-logo" src="https://github.com/user-attachments/assets/bee036d0-671a-4288-94e9-1aeeef38fe4f" />
 
 ## Présentation du projet
 
-**Univ Insight** est un observatoire national de l'insertion professionnelle des diplômés, réalisé dans le cadre du module **Modélisation des connaissances** en **M1 Informatique et Big Data**
+**Insera** est un observatoire national de l'insertion professionnelle des diplômés, réalisé dans le cadre du module **Modélisation des connaissances** en **M1 Informatique et Big Data**
 
 Le projet s'appuie sur les données ouvertes du **MESRI** (Ministère de l'Enseignement Supérieur) issues des enquêtes d'insertion professionnelle menées 18 et 30 mois après l'obtention du diplôme  
 Source des données : [data.enseignementsup-recherche.gouv.fr](https://data.enseignementsup-recherche.gouv.fr)
