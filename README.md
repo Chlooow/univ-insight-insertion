@@ -1,6 +1,6 @@
 # Insera — Insertion Professionnelle des Diplômés
 
-<img width="2000" height="2000" alt="Insera-logo" src="https://github.com/user-attachments/assets/bee036d0-671a-4288-94e9-1aeeef38fe4f" />
+<img width="100" height="100" alt="Insera-logo" src="https://github.com/user-attachments/assets/bee036d0-671a-4288-94e9-1aeeef38fe4f" />
 
 ## Présentation du projet
 
